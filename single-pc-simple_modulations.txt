@@ -1,0 +1,168 @@
+[C] [C] [0] []
+[C] [D, Dm] [1] [1]
+[C] [C] [2] []
+[C] [Cm, Em, Bb] [3] [3]
+[C] [C] [4] []
+[C] [C] [5] []
+[C] [G] [6] [6]
+[C] [C] [7] []
+[C] [Am] [8] [8]
+[C] [C] [9] []
+[C] [F] [10] [10]
+[C] [C] [11] []
+[Cm] [Cm] [0] []
+[Cm] [As] [1] [1]
+[Cm] [Cm] [2] []
+[Cm] [Cm] [3] []
+[Cm] [C, Am] [4] [4]
+[Cm] [Cm] [5] []
+[Cm] [Esm] [6] [6]
+[Cm] [Cm] [7] []
+[Cm] [Cm] [8] []
+[Cm] [C, Am, Bb] [9] [9]
+[Cm] [Es] [10] [10]
+[Cm] [Cm] [11] []
+[C]->[Cm]:
+
+
+[C]->[Cis]:
+
+
+[C]->[Cism]:
+
+
+[C]->[D]:
+
+
+[C]->[Dm]:
+
+
+[C]->[Es]:
+
+
+[C]->[Esm]:
+
+
+[C]->[E]:
+
+
+[C]->[Em]:
+
+
+[C]->[F]:
+Start:[C], Ende:[F], PCSet:[10], modulierende Töne:[10]
+
+
+[C]->[Fm]:
+
+
+[C]->[Fis]:
+
+
+[C]->[Fism]:
+
+
+[C]->[G]:
+Start:[C], Ende:[G], PCSet:[6], modulierende Töne:[6]
+
+
+[C]->[Gm]:
+
+
+[C]->[As]:
+
+
+[C]->[Asm]:
+
+
+[C]->[A]:
+
+
+[C]->[Am]:
+Start:[C], Ende:[Am], PCSet:[8], modulierende Töne:[8]
+
+
+[C]->[Bb]:
+
+
+[C]->[Bbm]:
+
+
+[C]->[B]:
+
+
+[C]->[Bm]:
+
+
+[Cm]->[C]:
+
+
+[Cm]->[Cis]:
+
+
+[Cm]->[Cism]:
+
+
+[Cm]->[D]:
+
+
+[Cm]->[Dm]:
+
+
+[Cm]->[Es]:
+Start:[Cm], Ende:[Es], PCSet:[10], modulierende Töne:[10]
+
+
+[Cm]->[Esm]:
+Start:[Cm], Ende:[Esm], PCSet:[6], modulierende Töne:[6]
+
+
+[Cm]->[E]:
+
+
+[Cm]->[Em]:
+
+
+[Cm]->[F]:
+
+
+[Cm]->[Fm]:
+
+
+[Cm]->[Fis]:
+
+
+[Cm]->[Fism]:
+
+
+[Cm]->[G]:
+
+
+[Cm]->[Gm]:
+
+
+[Cm]->[As]:
+Start:[Cm], Ende:[As], PCSet:[1], modulierende Töne:[1]
+
+
+[Cm]->[Asm]:
+
+
+[Cm]->[A]:
+
+
+[Cm]->[Am]:
+
+
+[Cm]->[Bb]:
+
+
+[Cm]->[Bbm]:
+
+
+[Cm]->[B]:
+
+
+[Cm]->[Bm]:
+
+

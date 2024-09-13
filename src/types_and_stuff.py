@@ -79,3 +79,9 @@ def key_to_pcset(key: Key) -> PCSet:
 
 def transpose(n: int, pcset: PCSet) -> PCSet:
     return [(pc + n) % 12 for pc in pcset]
+
+def is_atonal(pcset: PCSet) -> bool:
+    for key in list(map(lambda key: key_to_pcset(key), all_keys)):
+        if all(i in key for i in pcset):
+            return False
+    return True

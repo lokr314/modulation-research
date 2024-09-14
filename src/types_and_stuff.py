@@ -27,7 +27,7 @@ all_keys: List[Key] = [(n, mode) for n in range(12) for mode in ['dur', 'moll']]
 
 KeySet = List[Key]
 #all_harmonic_states: List[KeySet] = [hs for hs in powerset(all_keys) if len(hs) < 15] # This takes waaaaay to long
-all_single_key_sets: List[KeySet] = [[(n, mode)] for n in range(12) for mode in ['dur', 'moll']]
+all_single_key_key_sets: List[KeySet] = [[(n, mode)] for n in range(12) for mode in ['dur', 'moll']]
 
 dur = [0, 2, 4, 5, 7, 9, 11]
 moll = [0, 2, 3, 5, 7, 8, 11]
@@ -58,8 +58,10 @@ def show_key_set(keys: KeySet) -> str:
         return "[]"
     return "[" + ", ".join([show_key(key) for key in keys]) + "]"
 
-def show_key_sets(states: List[KeySet]) -> str:
-    return "".join([show_key_set(state) for state in states])
+
+
+def show_key_sets(key_sets: List[KeySet]) -> str:
+    return "".join([show_key_set(key_set) for key_set in key_sets])
 
 
 def pcset_equal(pcset1, pcset2):

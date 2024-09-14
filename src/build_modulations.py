@@ -1,6 +1,6 @@
 from typing import List
 
-from types_and_stuff import PCSet, all_single_key_sets, all_pcsets, key_to_pcset, show_key_set, is_atonal
+from types_and_stuff import PCSet, all_single_key_key_sets, all_pcsets, key_to_pcset, show_key_set, is_atonal
 from calc_modulation import calc_modulation
 
 class Modulation:
@@ -51,7 +51,7 @@ def build_modulations(pcsets, root_key_sets, constraints):
 	# replace with database filling code.
 	# Grouping
 	for k in root_key_sets:
-		for end_k in all_single_key_sets:
+		for end_k in all_single_key_key_sets:
 			if k == end_k:
 				continue
 			print(show_key_set(k) + "->" + show_key_set(end_k) + ":")
@@ -61,8 +61,8 @@ def build_modulations(pcsets, root_key_sets, constraints):
 					print(
 						#"Start:" + show_key_set(m.start_key_set) + 
 						#", Ende:" + show_key_set(m.end_key_set) +
-						"PCSet:" + str(m.pcset) +
-						", modulierende Töne:" + str(m.foreign_pitches) 
+						str(m.pcset)# +
+						#", modulierende Töne:" + str(m.foreign_pitches) 
 					)
 					result_list.remove(m)
 			print("")

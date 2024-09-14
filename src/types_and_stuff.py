@@ -58,10 +58,56 @@ def show_key_set(keys: KeySet) -> str:
         return "[]"
     return "[" + ", ".join([show_key(key) for key in keys]) + "]"
 
-
-
 def show_key_sets(key_sets: List[KeySet]) -> str:
     return "".join([show_key_set(key_set) for key_set in key_sets])
+
+import re
+
+def deserialize_key(key_str: str) -> tuple:
+    """
+    Deserializes a single key string back into a (pitchclass, mode) tuple.
+
+    Example:
+    'C' -> (0, 'dur')
+    'Cis' -> (1, 'dur')
+    'Cism' -> (1, 'moll')
+    'Bm' -> (11, 'moll')
+    'Bb' -> (10, 'dur')
+    """
+    notes_map = {
+        'C': 0, 'Cis': 1, 'D': 2, 'Es': 3, 'E': 4, 'F': 5, 'Fis': 6,
+        'G': 7, 'As': 8, 'A': 9, 'Bb': 10, 'B': 11
+    }
+    
+    if key_str.endswith('m'):
+        note = key_str[:-1]
+        mode = 'moll'
+    else:
+        note = key_str
+        mode = 'dur'
+
+    pitchclass = notes_map[note]
+    return (pitchclass, mode)
+
+def deserialize_key_set(key_set_str: str) -> list:
+    """
+    Deserializes the string representation of a key set back into a list of (pitchclass, mode) tuples.
+    
+    Example:
+    '[C, Cis, Cism, Bm]' -> [(0, 'dur'), (1, 'dur'), (1, 'moll'), (11, 'moll')]
+    '[]' -> []
+    """
+    # Remove the square brackets and split by commas
+    key_set_str = key_set_str.strip("[]").strip()
+    
+    if not key_set_str:
+        return []
+    
+    # Split the string into individual keys
+    key_strings = [key.strip() for key in key_set_str.split(",")]
+    
+    # Deserialize each key string
+    return [deserialize_key(key_str) for key_str in key_strings]
 
 
 def pcset_equal(pcset1, pcset2):

@@ -1,0 +1,18 @@
+Depth:  1
+Number of new key sets:  1023
+Depth:  2
+Number of new key sets:  9620
+Depth:  3
+Number of new key sets:  11126
+Depth:  4
+Number of new key sets:  5226
+Depth:  5
+Number of new key sets:  1920
+Depth:  6
+Number of new key sets:  576
+Depth:  7
+Number of new key sets:  132
+Depth:  8
+Number of new key sets:  12
+Depth:  9
+Number of new key sets:  0

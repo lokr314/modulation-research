@@ -16,22 +16,42 @@ def powerset(iterable):
     s = list(iterable)
     return [list(subset) for subset in chain.from_iterable(combinations(s, r) for r in range(1, len(s)+1))]
 
+#--- PC ------------------------------------------------------------------------
+
 PC = int
 all_pcs: List[PC] = list(range(12))
 
+#--- PCSet ---------------------------------------------------------------------
+
 PCSet = List[PC]
 all_pcsets: List[PCSet] = [pcset for pcset in powerset(all_pcs)]
+dur = [0, 2, 4, 5, 7, 9, 11]
+moll = [0, 2, 3, 5, 7, 8, 11]
+
+def transpose(n: int, pcset: PCSet) -> PCSet:
+    return [(pc + n) % 12 for pc in pcset]
+
+def is_atonal(pcset: PCSet) -> bool:
+    for key in list(map(lambda key: key_to_pcset(key), all_keys)):
+        if all(i in key for i in pcset):
+            return False
+    return True
+
+
+def pcset_equal(pcset1, pcset2):
+    """Returns True if pcset1 and pcset2 are equal, False otherwise.
+    pcset1 and pcset2 are lists of pitch classes, e.g. [0, 4, 7]"""
+    return sorted(pcset1) == sorted(pcset2)
+
+#--- Key -----------------------------------------------------------------------
 
 Key = Tuple[PC, str]
 all_keys: List[Key] = [(n, mode) for n in range(12) for mode in ['dur', 'moll']]
 
-KeySet = List[Key]
-#all_harmonic_states: List[KeySet] = [hs for hs in powerset(all_keys) if len(hs) < 15] # This takes waaaaay to long
-all_single_key_key_sets: List[KeySet] = [[(n, mode)] for n in range(12) for mode in ['dur', 'moll']]
 
-dur = [0, 2, 4, 5, 7, 9, 11]
-moll = [0, 2, 3, 5, 7, 8, 11]
-
+def key_to_pcset(key: Key) -> PCSet:
+    n, mode = key
+    return transpose(n, dur) if mode == 'dur' else transpose(n, moll)
 
 def show_key(key: Key) -> str:
     """
@@ -52,16 +72,6 @@ def show_key(key: Key) -> str:
     n, mode = key
     notes = ['C', 'Cis', 'D', 'Es', 'E', 'F', 'Fis', 'G', 'As', 'A', 'Bb', 'B']
     return notes[n] + ('' if mode == 'dur' else 'm')
-
-def show_key_set(keys: KeySet) -> str:
-    if not keys:
-        return "[]"
-    return "[" + ", ".join([show_key(key) for key in keys]) + "]"
-
-def show_key_sets(key_sets: List[KeySet]) -> str:
-    return "".join([show_key_set(key_set) for key_set in key_sets])
-
-import re
 
 def deserialize_key(key_str: str) -> tuple:
     """
@@ -89,7 +99,27 @@ def deserialize_key(key_str: str) -> tuple:
     pitchclass = notes_map[note]
     return (pitchclass, mode)
 
-def deserialize_key_set(key_set_str: str) -> list:
+def keyset_equal(keyset1, keyset2):
+    """Returns True if keyset1 and keyset2 are equal, False otherwise.
+    keyset1 and keyset2 are lists of keys, e.g. [(0, 'dur'), (4, 'moll')]"""
+    return sorted(keyset1) == sorted(keyset2)
+
+tonal_and_up_to_6_pcs_pcsets: List[PCSet] = [pcset for pcset in all_pcsets if len(pcset) <= 6] + list(map(lambda key: key_to_pcset(key), all_keys))
+
+#--- KeySet --------------------------------------------------------------------
+
+KeySet = List[Key]
+#all_harmonic_states: List[KeySet] = [hs for hs in powerset(all_keys) if len(hs) < 15] # This takes waaaaay to long
+all_single_key_keysets: List[KeySet] = [[(n, mode)] for n in range(12) for mode in ['dur', 'moll']]
+
+def show_keyset(keys: KeySet) -> str:
+    if not keys:
+        return "[]"
+    return "[" + ", ".join([show_key(key) for key in keys]) + "]"
+def show_keysets(keysets: List[KeySet]) -> str:
+    return "".join([show_keyset(keyset) for keyset in keysets])
+
+def deserialize_keyset(keyset_str: str) -> list:
     """
     Deserializes the string representation of a key set back into a list of (pitchclass, mode) tuples.
     
@@ -98,38 +128,28 @@ def deserialize_key_set(key_set_str: str) -> list:
     '[]' -> []
     """
     # Remove the square brackets and split by commas
-    key_set_str = key_set_str.strip("[]").strip()
+    keyset_str = keyset_str.strip("[]").strip()
     
-    if not key_set_str:
+    if not keyset_str:
         return []
     
     # Split the string into individual keys
-    key_strings = [key.strip() for key in key_set_str.split(",")]
+    key_strings = [key.strip() for key in keyset_str.split(",")]
     
     # Deserialize each key string
     return [deserialize_key(key_str) for key_str in key_strings]
 
 
-def pcset_equal(pcset1, pcset2):
-    """Returns True if pcset1 and pcset2 are equal, False otherwise.
-    pcset1 and pcset2 are lists of pitch classes, e.g. [0, 4, 7]"""
-    return sorted(pcset1) == sorted(pcset2)
-
-def key_set_equal(key_set1, key_set2):
-    """Returns True if key_set1 and key_set2 are equal, False otherwise.
-    key_set1 and key_set2 are lists of keys, e.g. [(0, 'dur'), (4, 'moll')]"""
-    return sorted(key_set1) == sorted(key_set2)
 
 
-def key_to_pcset(key: Key) -> PCSet:
-    n, mode = key
-    return transpose(n, dur) if mode == 'dur' else transpose(n, moll)
 
-def transpose(n: int, pcset: PCSet) -> PCSet:
-    return [(pc + n) % 12 for pc in pcset]
 
-def is_atonal(pcset: PCSet) -> bool:
-    for key in list(map(lambda key: key_to_pcset(key), all_keys)):
-        if all(i in key for i in pcset):
-            return False
-    return True
+
+
+
+
+
+
+
+
+

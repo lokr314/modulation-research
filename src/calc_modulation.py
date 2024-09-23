@@ -1,19 +1,19 @@
 from typing import List, Tuple
 
-from types_and_stuff import Key, KeySet,  PCSet, all_keys, key_to_pcset
+from src.model.types_and_stuff import Key, KeySet,  PCSet, all_keys, key_to_pcset
 
-def calc_modulation(start_key_set, pcset) -> KeySet:
+def calc_modulation(start_keyset, pcset) -> KeySet:
     possible_keys = calc_possible_keys(pcset)
 
-    end_key_set = [key for key, _ in get_max_tupel(
+    end_keyset = [key for key, _ in get_max_tupel(
             [
                 (key, max(
-                        map(lambda x: x[1], compare(start_key_set, key_to_pcset(key))) # For each key in possible_keys: Get the highest number of equal pitchclasses with any key in old_harmonic_state.
+                        map(lambda x: x[1], compare(start_keyset, key_to_pcset(key))) # For each key in possible_keys: Get the highest number of equal pitchclasses with any key in old_harmonic_state.
                     )) for key in possible_keys                                             
             ])
     ]
 
-    return end_key_set
+    return end_keyset
 
 
 def calc_possible_keys(pcset: PCSet) -> List[Key]:

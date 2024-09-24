@@ -2,8 +2,9 @@ from typing import List
 
 import psycopg2
 
+from src.model.KeySet import KeySetClass
 from src.model.PCSet import PCSetClass
-from src.model.types_and_stuff import PCSet
+from src.model.types_and_stuff import Key, PCSet
 
 
 def get_connection():
@@ -50,15 +51,14 @@ def create_tables():
 
 # --- Insert PCSet -------------------------------------------------------------
 
-def pcset_to_bitstring(pcset: List[int]) -> int:
+def pcset_to_bitstring(pcset: PCSet) -> int:
     bitstring = 0
     for pc in pcset:
         bitstring |= 1 << 11 - pc
     return bitstring
 
-def bitstring_to_pcset(bitstring: str) -> List[int]:
+def bitstring_to_pcset(bitstring: str) -> PCSet:
     pcset = []
-    bitstring = bitstring[::-1]
     for i in range(12):
         if bitstring[i] == "1":
             pcset.append(i)
@@ -94,6 +94,33 @@ VALUES
 
 # --- Insert KeySet ------------------------------------------------------------
 
+def keyset_to_bitstring(keyset: List[Key]) -> int:
+    """
+    Each bit represents a key in the keyset. The leftmost bit is C major, after this C minor, D major etc.. The rightmost bit is B minor.
+    """
+    bitstring = 0
+    for key in keyset:
+        bitstring |= 1 << 23 - key[0] * 2 - (1 if key[1] == "moll" else 0)
+    return bitstring
+
+def bitstring_to_keyset(bitstring: str) -> List[Key]:
+    keyset = []
+    for i in range(12):
+        if bitstring[i * 2] == "1":
+            keyset.append((i, "dur"))
+        if bitstring[i * 2 + 1] == "1":
+            keyset.append((i, "moll"))
+    return keyset
+
+def insert_keysets(keysets: List[KeySetClass]):
+    conn = get_connection()
+
+    sql_string = """INSERT INTO keysets (keyset, keyset_size, shortest_path_length, shortest_path_example, is_simple)
+VALUES
+"""
+
+    for keyset in keysets:
+        sql_string += f"    ({keyset_to_bitstring(keyset.keyset)}::bit(24), {keyset.keyset_size}, {keyset.shortest_path_length if keyset.shortest_path_length else 'NULL'}, {keyset.shortest_path_example if keyset.shortest_path_example else 'NULL'}, {keyset.is_simple}),\n"
 
 # --- Insert Modulation --------------------------------------------------------
 
